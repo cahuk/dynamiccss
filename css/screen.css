@@ -1,0 +1,15 @@
+.content{
+	width: 1008px;
+	margin: 0 auto;
+	background: #0deeff;
+	padding: 10px;
+}
+#dynamic_css {
+	display: block;
+	width: 256px;
+	margin: 10px auto;
+}
+
+#mobile{
+	display: none;
+}
