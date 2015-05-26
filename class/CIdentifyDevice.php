@@ -1,6 +1,7 @@
 <?php 
+
 /**
- * Класс определяет устройство пользователя (комьютер или мобильное)
+ * The class defines the user's device (Dive Computers or mobile)
  */
  
  
@@ -10,8 +11,8 @@ class CIdentifyDevice
 	const MOBILE  = 'mobile';
 	
 	/** 
-	 * Метод определяет с какого устройства зашел пользователь, путем проверки его $_SERVER['HTTP_USER_AGENT']
-	 * @return string устройство
+	 * The method determines which device the user has gone through the verification of its $_SERVER['HTTP_USER_AGENT']
+	 * @return string device
 	 */
 	public static function getDevice() 
 	{
@@ -29,5 +30,3 @@ class CIdentifyDevice
 	}
 	
 }
-
-?>

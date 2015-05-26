@@ -1,7 +1,7 @@
 <?php 
 
  /**
-  *  Абстрактный класс для работы с файлами
+  *  An abstract class for working with files
   *
   * @property string $_path путь к директории файла относительно корня приложения
   * @property string $_file_name имя файла
@@ -12,22 +12,20 @@
 
 abstract class CControlFile
 {
-    private $_file_name = '';   // имя файла
-    private $_path  = '';       // путь к директории
+    private $_file_name = '';   // file name
+    private $_path  = '';       // directory path
 
 	
 	public function __construct( $file_name, $path )
 	{
-		/** устанавливаем имя файла */
         $this->setFileName( $file_name );
 
-        /** указываем путь к папке где лежат файл */
         $this->setPath( $path );
 	}
 
 	
     /**
-     * @param string $file_name метод устанавливает имя файла
+     * @param string $file_name method sets the name of the file
      */
     public function setFileName( $file_name )
     {
@@ -36,7 +34,7 @@ abstract class CControlFile
 
 
     /**
-     * @return string метод возвращает имя файла
+     * @return string method returns the name of the file
      */
     public function getFileName()
     {
@@ -45,7 +43,7 @@ abstract class CControlFile
 	
 
     /**
-     * Метод задает абсолютный путь где находится файл, с которым мы работаем
+     * The method specifies the absolute path where the file is located, with which we are working
      * @param string $path
      */
     public function setPath( $path )
@@ -59,7 +57,7 @@ abstract class CControlFile
 
 	
     /**
-     * Метод возвращает путь где лежит файл
+     * The method returns the path where the file
      */
     public function getPath()
     {
@@ -68,7 +66,7 @@ abstract class CControlFile
 
 	
     /**
-     * @return mixed сам файл или выбрасывает исключение, если файл не существует
+     * @return mixed the file itself or throws an exception if the file does not exist
      * @throws exception
      */
     public function getFile()
@@ -83,7 +81,7 @@ abstract class CControlFile
 
 	
     /**
-	 * Меотод возвращает абсолютный путь к файлу
+	 * he method returns an absolute pathname
      * @return string path
      */
     public function getFilePath()
@@ -93,19 +91,19 @@ abstract class CControlFile
 
 
     /**
-     * Нужно переопределить этот метод в дочерних класах с обязательным указанием заголовка Content-type:
-	 * пример:
+     * It is necessary to override this method in a child class with the obligatory indication of the title Content-type:
+	 * example:
      * 	header('Content-type: text/css');
-	 * или
+	 * or
      * 	header('Content-type: application/javascript');
-	 * Так же можно добавить дополнительные заголовки, если это необходимо
+	 * It is also possible to add additional headers, if appropriate
      */
     abstract function header();
 
 
     /**
-     * Выводим наш файл
-     * В метод display передаем дочерний обьект в котором переопределен метод header()
+     * Display our file
+     * The display method pass child object in which overridden method header ()
      */
     public function display( CControlFile $subClass )
     {

@@ -1,19 +1,19 @@
 <?php
 	/**
-	* указываем путь к css файлам отдельно для мобильной и обычной версии
-     * пример для обычной версии:
+	* specify the path to the css file separately for the mobile and regular versions
+     * an example for the desktop version:
      * 'screen_css' => [
             'path'=>'/dynamiccss/css1/',
             'name'=>'screen.css'
             ]
      *
-     * пример для мобильной версии:
+     * an example for the mobile version:
      * 'mobile_css' =>[
             'path'=>'/dynamiccss/css/',
             'name'=>'mobile.css'
         ]
      *
-	* если нужно подгрузить только один файл, например только mobile.css, а второй оставить по умолчанию тогда достаточно удалить елемент 'screen_css или mobile_css' из массива или задать ему пустое значение
+	* if you want to load a single file, for example, only mobile.css, and the second to leave the default then simply delete yelement 'screen_css or mobile_css' from an array or ask him a blank
 	*/
 	return [
 		'screen_css' => [

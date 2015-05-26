@@ -1,30 +1,30 @@
 <?php
 
 /**
- * Контроллер работы с динамически переключением цсс файлов
+ * The controller works with dynamic switching css files
  */
   
-	/** стартуем сессию */
+	/** start session */
 	@session_start();
 	
-    /** если сессию не удалось стартонуть, выбрасываем исключение */
+    /** if there is no session, then throws an exception */
 	if(session_id()=='')
 		throw new Exception('Failed to start session.');
 		
 
-	/** подключаем все необходимые классы */
+	/** connect the main controller class */
 	require_once 'class/CMainController.php';
 
 
-    /** @var object CMainCssController обьект контроллера для работы с цсс файлами */
+    /** @var object CMainCssController controller object to work with css files */
     $dynamicСss = new CMainController();
 	
 
-    /** указываем путь к конфигу */
+    /** specify the path to a config */
     $config_path = 'dynamic_css_conf.php';
 	
 	
-	/** Подгружаем конфиг */
+	/** load the configuration */
     if( file_exists( $config_path ) ) {
 	
        $config = require_once $config_path;
@@ -36,47 +36,47 @@
     }
 
 
-    /** @var string $com_variable переменная, по которая будет служить ключем в сессии и GET запросе */
+    /** @var string $com_variable variables that will serve as a key in the session in a GET request */
     $com_variable  = CMainController::COM_CSS_DATA;
 
 
     /** 
-	 * Если в сессии не существут данных об устройстве или выборе пользователя, тогда их нужнозаписать,
-     * это означает, что мы работаем с версие CSS исходя из устройства пользователя
+	 * If the session, there is no data on the device or the user's selection, then they need to write,
+     * this means that we work with the version of the device based on the CSS user
 	 */
     if( !isset( $_SESSION[ $com_variable ] ) )
         $_SESSION[ $com_variable ] = $dynamicСss->getDefaultData( $dynamicСss->getDevice() );
 
 
-    /** @var string $user_chois записываем текущую информациб об выборе типа */
-    $user_chois = $_SESSION[ $com_variable ][ CMainController::COM_CSS_DATA_USER_CHOIS ]; //храниться линк для переключения стилей
+    /** @var string $user_chois Writes the current information on the choice of the type of device */
+    $user_chois = $_SESSION[ $com_variable ][ CMainController::COM_CSS_DATA_USER_CHOIS ]; //store link to switch styles
 
 
     /** 
-	 * Cначала проверяем или клиент не изменил тип верстки
-     * для этого нужно проверить нет ли GET запроса  $_GET['user_choice'] и существует $_SESSION['css_data']['user_choice']
+	 * First, the client does not check or change the type of layout
+     * it needs to check whether the request $_GET ['user_choice'] and not isset $_SESSION['css_data']['user_choice']
      */
     if( isset( $_GET['user_choice'] ) ) {
         
-        $_SESSION[ $com_variable ] = $dynamicСss->getNewData( $user_chois ); // заносим новые данные в сессию
+        $_SESSION[ $com_variable ] = $dynamicСss->getNewData( $user_chois ); // Pushes the new data in the session
         
-        header('Location:' . $_SERVER['HTTP_REFERER']); // редиректим на страницу от куда пришли
+        header('Location:' . $_SERVER['HTTP_REFERER']); // redirect to the page where you came from
 		
         die();
 		
     }
 
 	
-    /** проверяем или есть GET запрос для отображения css файла <link rel="stylesheet" type="text/css" href="dynamicoutput.css.php?get_css" /> */
+    /** check or have a GET request to display the css file <link rel="stylesheet" type="text/css" href="dynamicoutput.css.php?get_css" /> */
     if( isset( $_GET['get_css'] ) ) {
 	
-        /** определяем имя ссц файла по умолчанию, это файлы модуля /css/(screen.css|mobile.css) в зависимости от устройства или выбора пользователя */
+        /** determine the name of the CSS default file is the module files /css/(screen.css|mobile.css) epending on the device or the user's choice */
         $css_file_name = $user_chois . '.css';
 		
         $css_path = '';
 		
 
-		/** если в конфиге указан путь к цсс файлу полной версии */
+		/** if the path to the config file css desktop version */
 		if( isset( $config_screen ) && $user_chois == $dynamicСss->getDeviceScreen() ) {
 		
 			$css_file_name = $config_screen['name'];
@@ -85,7 +85,7 @@
 			
 		}
 
-		/** если в конфиге указан путь к цсс файлу мобильной версии версии */
+		/** if the path to the config file css mobile version */
 		if( isset( $config_mobile ) && $user_chois == $dynamicСss->getDeviceMobile() ) {
 		
 			$css_file_name = $config_mobile['name'];
@@ -95,12 +95,12 @@
 		}
 		
 		
-		/** запускаем работу класса для отдачи css файла */
+		/** Run the job class returns css file */
 		$dynamicСss->init( $css_file_name, $css_path );
 		
     }
 
-    /** выводим необходимый текст ссылки переключением версий */
+    /** display the desired link text switching versions */
     if( isset( $_GET['get_js'] ) ) {
 	
         header('Content-type: application/javascript');

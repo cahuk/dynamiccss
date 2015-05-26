@@ -1,47 +1,47 @@
 <?php
 
 /**
- * Клас для запуска работы с динамическим css файлами
+ * The main class of a client to run a dynamic substitution css files
  */
  
-/** подключаем используемые классы */
+/** connect the used classes */
 require_once 'class/CIdentifyDevice.php';
 require_once 'class/CControlCss.php';
 
 class CMainController {
 
-    /** эти константы являються ключами, по которым будут храниться наши данные в сесии и в GET запросе при переключении между css файлами */
+    /** these constants are the keys, which will be stored in our data Session and GET requests when you switch between the css files */
     const COM_CSS_DATA = 'css_data';
     const COM_CSS_DATA_USER_CHOIS = 'user_choice';
     const COM_CSS_DATA_LINK_NAME  = 'link_name';
 
-	/** @property array $_link_and_name массив, в котором находится имена ссылок для переключения версий css файлов */
+	/** @property array $_link_and_name an array that contains the names of links to switch versions of css files */
     private $_link_and_name  = [
 	
-        'screen' => 'Перейти на мобильную версию сайта', // если сейчас полная версия, тогда ссылку нужно назвать с указанием на мобильную версию
+        'screen' => 'Перейти на мобильную версию сайта', // if now the full version, then the link must be called with an indication to the mobile version
 		
-        'mobile' => 'Перейти на полную версию сайта',    // и наоборот, если это мобильная версия, нужно назвать ссылку переход на полную
+        'mobile' => 'Перейти на полную версию сайта',    // and conversely, if it is a mobile version should be called a link to the full transition
     
 	];
 
-	/** @property array $_new_data хранит в себе данные об выборе пользователя, которые потом заносятся в сессию */
+	/** @property array $_new_data It keeps the data on the user's selections, which are then recorded in the session */
     private $_new_data = array(); 
 	
-	/** @property CControlCss $_controlCss хранит ссылку на обьект CControlCss */
+	/** @property CControlCss $_controlCss stores the object reference CControlCss */
     private $_controlCss = null;	
 	
-	/** @property string $_device хранит устройство пользователя */
+	/** @property string $_device stores the user's device */
 	private $_device ='';
 	
-	/** @property string $_device_screen хранит ключ для десктопной версии CIdentifyDevice::SCREEN */
+	/** @property string $_device_screen It holds the key to the desktop version CIdentifyDevice::SCREEN */
 	private $_device_screen = '';
 	
-	/** @property string $_device_mobile хранит ключ для мобильной версии CIdentifyDevice::MOBILE */
+	/** @property string $_device_mobile It holds the key to the mobile version CIdentifyDevice::MOBILE */
 	private $_device_mobile = '';
 	
 	
 	/**
-	 * В конструкторе определяем устройство пользователя и записываем ключи для свойст $_device_screen и $_device_mobile
+	 * In the constructor to determine the user's device and record keys for properties $_device_screen and $_device_mobile
 	 */
 	public function __construct()
 	{
@@ -57,11 +57,11 @@ class CMainController {
      */
     public function init( $css_file_name, $path='' )
     {
-		/** если путь к папке css не указан, тогда берем по умолчанию - папку этого модуля /css/ */
+		/** if the path to the css is not specified, then take the default - this module folder /css/ */
 		if( $path=='' )
 			$path = pathinfo( $_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME ) . '/css';
 	
-		/** запускаем класс CControlCss для вывода нашего css файла */
+		/** run the class CControlCss to output our css file */		
         $this->_controlCss = new CControlCss( $css_file_name, $path );
     }	
 	
@@ -90,8 +90,8 @@ class CMainController {
     }
 
     /**
-     * @param string $user_chois выбор пользователя
-     * @return array $this->_new_data новые данные для занесения в сессию
+     * @param string $user_chois the user's choice
+     * @return array $this->_new_data new data for inclusion in the session
      */
     public function getNewData( $user_chois )
     {
@@ -109,7 +109,7 @@ class CMainController {
 
     /**
      * @param string $user_device устройство пользователя
-     * @return array $this->_new_data новые данные для занесения в сессию
+     * @return array $this->_new_data new data for inclusion in the session
      */
     public function getDefaultData( $user_device )
     {
@@ -126,8 +126,8 @@ class CMainController {
     }
 
     /**
-     * @param string $data_user_chois выбор или устройство клиента
-     * @param string $data_link_name название ссылки для переключения между версиями css файлов
+     * @param string $data_user_chois the selection or the user's device
+     * @param string $data_link_name name links to switch between versions of css files
      */
     private function createData( $data_user_chois, $data_link_name )
     {
@@ -159,6 +159,5 @@ class CMainController {
 
         return null;
     }
-
 
 }
